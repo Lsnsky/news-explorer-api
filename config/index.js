@@ -1,0 +1,14 @@
+module.exports.PORT = process.env.PORT || 3000;
+module.exports.NODE_ENV = process.env.NODE_ENV || 'production';
+module.exports.JWT_SECRET = process.env.JWT_SECRET || 'JWT_SECRET';
+
+module.exports.KEY = (process.env.NODE_ENV === 'production') ? process.env.JWT_SECRET : 'dev-secret';
+
+module.exports.mongooseConfig = {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true,
+};
+
+module.exports.mongooseUrl = 'mongodb://localhost:27017/newsdb';
