@@ -11,4 +11,4 @@ module.exports.mongooseConfig = {
   useUnifiedTopology: true,
 };
 
-module.exports.mongooseUrl = 'mongodb://localhost:27017/newsdb';
+module.exports.MONGOOSE_URL = process.env.MONGOOSE_URL || 'mongodb://localhost:27017/newsdb';

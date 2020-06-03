@@ -7,16 +7,16 @@ const helmet = require('helmet');
 const { celebrate, Joi } = require('celebrate');
 const { errors } = require('celebrate');
 
-const { PORT, mongooseConfig, mongooseUrl } = require('./config/index');
+const { PORT, mongooseConfig, MONGOOSE_URL } = require('./config/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const usersRouter = require('./routes/users');
-const articlesRouter = require('./routes/articles');
+const routerMain = require('./routes/index');
 const auth = require('./middlewares/auth');
+const errorsHandler = require('./middlewares/errors-handler');
 const { createUser, login } = require('./controllers/users');
 
 const app = express();
-mongoose.connect(mongooseUrl, mongooseConfig);
+mongoose.connect(MONGOOSE_URL, mongooseConfig);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -47,32 +47,21 @@ app.post('/signin', celebrate({
   }),
 }), login);
 
-// авторизация
+// авторизация, дальнейшие роуты защищены
 app.use(auth);
 
 // роуты доступа к информации
-app.use('/users', usersRouter);
-// app.use('/articles', articlesRouter);
+app.use('/', routerMain);
 
 // подключение логгера ошибок
 app.use(errorLogger);
 
 // обработчики ошибок
-
 // обработчик ошибок celebrate
 app.use(errors());
 
 // централизованный обработчик ошибок
-// app.use((err, req, res, next) => {
-//   const { statusCode = 500, message } = err;
-//   res
-//     .status(statusCode)
-//     .send({
-//       message: statusCode === 500
-//         ? err.message : message,
-//     });
-// });
-
+app.use(errorsHandler);
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);

@@ -1,5 +1,5 @@
-const { KEY } = process.env;
 const jwt = require('jsonwebtoken');
+const { KEY } = require('../config/index');
 const AuthError = require('../errors/auth-err');
 
 module.exports = (req, res, next) => {

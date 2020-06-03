@@ -32,3 +32,12 @@ module.exports.login = (req, res, next) => {
     })
     .catch(next);
 };
+
+module.exports.getUserInfo = (req, res, next) => {
+  const id = req.user._id;
+  User.findById(id)
+    .then((user) => {
+      res.send({ data: user });
+    })
+    .catch(next);
+};
