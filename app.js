@@ -57,8 +57,15 @@ app.use('/', routerMain);
 app.use(errorLogger);
 
 // обработчики ошибок
+
+// ошибка при неправильном адресе в строке
+app.use('*', (req, res) => {
+  res.status(404).json({ message: 'Запрашиваемый ресурс не найден' });
+});
+
 // обработчик ошибок celebrate
 app.use(errors());
+
 
 // централизованный обработчик ошибок
 app.use(errorsHandler);
