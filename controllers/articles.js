@@ -57,5 +57,5 @@ module.exports.deleteArticle = (req, res, next) => {
 // "text":"test",
 // "date":"test",
 // "source":"test",
-// "link":"https://dsdsd.com",
-// "image":"https://dsdsdd.com"
+// "link":"https://test.com",
+// "image":"https://test.com"
