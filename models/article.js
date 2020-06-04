@@ -49,6 +49,7 @@ const articleSchema = new mongoose.Schema({
     type: { ObjectId },
     ref: 'User',
     required: true,
+    select: false,
   },
 });
 
