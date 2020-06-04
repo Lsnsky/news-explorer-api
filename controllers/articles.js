@@ -36,7 +36,7 @@ module.exports.createArticle = (req, res, next) => {
 };
 
 module.exports.deleteArticle = (req, res, next) => {
-  Article.findById(req.params.id)
+  Article.findById(req.params.id).select('+owner')
     .orFail(() => new NotFoundError(`статья с id:${req.params.id} не найдена в базе данных`))
     .then((article) => {
       const { owner } = article;
