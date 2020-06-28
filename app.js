@@ -38,24 +38,27 @@ app.use(requestLogger);
 // роуты регистрации и логина
 
 const corsOptions = {
-  origin: 'http://localhost:8080',
-  credentials: true,
+    origin: [
+        'http://localhost:8080',
+        'https://lsnsky.github.io/'
+    ],
+    credentials: true,
 };
 app.use(cors(corsOptions));
 
 app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-  }),
+    body: Joi.object().keys({
+        name: Joi.string().required().min(2).max(30),
+        email: Joi.string().required().email(),
+        password: Joi.string().required().min(8),
+    }),
 }), createUser);
 
 app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-  }),
+    body: Joi.object().keys({
+        email: Joi.string().required().email(),
+        password: Joi.string().required().min(8),
+    }),
 }), login);
 
 // авторизация, дальнейшие роуты защищены
@@ -71,7 +74,7 @@ app.use(errorLogger);
 
 // ошибка при неправильном адресе в строке
 app.use('*', (req, res) => {
-  res.status(404).json({ message: 'Запрашиваемый ресурс не найден' });
+    res.status(404).json({ message: 'Запрашиваемый ресурс не найден' });
 });
 
 // обработчик ошибок celebrate
@@ -82,5 +85,5 @@ app.use(errors());
 app.use(errorsHandler);
 
 app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
+    console.log(`App listening on port ${PORT}`);
 });
